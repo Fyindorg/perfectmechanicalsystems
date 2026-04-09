@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-// Product images
-import craneValvesImg from "@/assets/products/crane-valves.jpg";
-import muellerValvesImg from "@/assets/products/mueller-fire-valves.jpg";
-import peglerValvesImg from "@/assets/products/pegler-valves.jpg";
-import nibcoValveImg from "@/assets/products/nibco-bronze-valve.jpg";
-import wikaGaugesImg from "@/assets/products/wika-gauges.jpg";
-import hitachiFittingsImg from "@/assets/products/hitachi-fittings.jpg";
+// Product images — updated with high-quality matched images
+import craneValvesImg from "@/assets/products/crane-ball-valve.webp";
+import muellerValvesImg from "@/assets/products/mueller-check-valve.webp";
+import peglerValvesImg from "@/assets/products/pegler-gate-valve.webp";
+import nibcoValveImg from "@/assets/products/pegler-lockshield.jpeg";
+import wikaGaugesImg from "@/assets/products/wika-thermowell.jpeg";
+import hitachiFittingsImg from "@/assets/products/hitachi-mi-elbow.webp";
 import bothwellFittingsImg from "@/assets/products/bothwell-fittings.jpg";
-import benkanFittingsImg from "@/assets/products/benkan-fittings.jpg";
-import nationalGroovedImg from "@/assets/products/national-grooved.jpg";
-import shurjointCouplingsImg from "@/assets/products/shurjoint-couplings.jpg";
+import benkanFittingsImg from "@/assets/products/benkan-bw-elbow.webp";
+import nationalGroovedImg from "@/assets/products/national-coupling.jpeg";
+import shurjointCouplingsImg from "@/assets/products/shurjoint-outlet.jpeg";
 import shurjointFlangesImg from "@/assets/products/shurjoint-flanges.jpg";
 import shurjointFittingsImg from "@/assets/products/shurjoint-fittings.jpg";
 import shurjointSSImg from "@/assets/products/shurjoint-ss.jpg";
@@ -29,7 +29,7 @@ import mrflexExpansionImg from "@/assets/products/mrflex-expansion.jpg";
 import axialExpansionImg from "@/assets/products/axial-expansion.jpg";
 import neumeriaFlangesImg from "@/assets/products/neumeria-flanges.jpg";
 import gasketsImg from "@/assets/products/gaskets.jpg";
-import wattsPrvImg from "@/assets/products/watts-prv.jpg";
+import wattsPrvImg from "@/assets/products/watts-relief-valve.webp";
 import pipeHangersImg from "@/assets/products/pipe-hangers.jpg";
 import dielectricUnionImg from "@/assets/products/dielectric-union.jpg";
 
@@ -725,16 +725,16 @@ const ProductCard = ({ item }: { item: ProductItem }) => {
     <div className="bg-card rounded-2xl border border-border card-shadow hover:elevated-shadow transition-all duration-200 overflow-hidden">
       {/* Product Image */}
       {item.image && (
-        <div className="relative overflow-hidden group cursor-pointer" onClick={() => setExpanded(!expanded)}>
+        <div className="relative overflow-hidden group cursor-pointer bg-white" onClick={() => setExpanded(!expanded)}>
           <img
             src={item.image}
             alt={`${item.brand} products`}
             loading="lazy"
             width={800}
             height={600}
-            className="w-full h-48 object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            className="w-full h-72 object-contain p-4 transition-transform duration-1000 ease-out group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
         </div>
       )}
 

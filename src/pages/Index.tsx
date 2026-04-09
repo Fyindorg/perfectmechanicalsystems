@@ -131,7 +131,7 @@ const Index = () => {
               Learn More About Us <ArrowRight size={16} />
             </Link>
           </div>
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] img-hover-zoom">
             <img
               src={aboutBg}
               alt="Mechanical pipe systems and industrial fittings"
@@ -166,11 +166,13 @@ const Index = () => {
                 className="bg-card rounded-xl px-4 py-5 text-center card-shadow hover:elevated-shadow hover:-translate-y-0.5 transition-all duration-200 border border-border flex flex-col items-center justify-center gap-3 min-h-[110px]"
               >
                 {brand.logo ? (
-                  <img
-                    src={brand.logo}
-                    alt={`${brand.name} logo`}
-                    className="h-10 w-auto max-w-[100px] object-contain mix-blend-multiply"
-                  />
+                  <div className="img-hover-zoom rounded">
+                    <img
+                      src={brand.logo}
+                      alt={`${brand.name} logo`}
+                      className="h-10 w-auto max-w-[100px] object-contain mix-blend-multiply"
+                    />
+                  </div>
                 ) : (
                   <div className="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center">
                     <span className="text-white font-bold text-xs">{brand.name.substring(0, 2)}</span>

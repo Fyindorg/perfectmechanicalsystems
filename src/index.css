@@ -129,4 +129,15 @@
   .elevated-shadow {
     box-shadow: var(--shadow-elevated);
   }
+
+  /* Smooth hover animation for all images */
+  .img-hover-zoom {
+    @apply overflow-hidden;
+  }
+  .img-hover-zoom img {
+    @apply transition-transform duration-1000 ease-out;
+  }
+  .img-hover-zoom:hover img {
+    @apply scale-110;
+  }
 }
