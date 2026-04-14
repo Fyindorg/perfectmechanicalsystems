@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 // Product images — updated with high-quality matched images
@@ -35,6 +35,7 @@ import dielectricUnionImg from "@/assets/products/dielectric-union.jpg";
 
 interface ProductItem {
   brand: string;
+  brandKey: string;
   subtitle: string;
   description: string;
   specs: string[];
@@ -48,6 +49,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "CRANE Fluid Systems",
+        brandKey: "CRANE",
         subtitle: "General Valves — Ball, Gate, Globe, Butterfly & More",
         description:
           "Since 1919, Crane Fluid Systems has been designing and manufacturing a wide range of general valves, including ball, butterfly, check, gate, globe, and press-fit valves. Crane Fluid Systems valves are utilized in plumbing and heating systems worldwide, serving homes, offices, industrial facilities, educational institutions, recreational centers, and hospital buildings.",
@@ -62,6 +64,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "Mueller Co.",
+        brandKey: "MUELLER",
         subtitle: "Fire Protection Products — OS&Y Gate Valves, Check Valves, Indicator Posts",
         description:
           "Private industry and public institutions rely upon special fire protection systems as required by their insurance underwriters. Mueller Co. provides these end users with a full line of fire protection products compliant to Underwriters Laboratories and Factory Mutual requirements (UL/FM).",
@@ -76,6 +79,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "PEGLER Valve (Aalberts Piping Systems)",
+        brandKey: "PEGLER",
         subtitle: "Integrated Piping & Valve Technology",
         description:
           "Pegler provides the best solutions for integrated piping systems — a range of product lines for connection technology and valve technology, offering the ultimate solution for top-quality integrated piping systems. PMS is an authorized distributor for Pegler Valves in the Kingdom of Saudi Arabia.",
@@ -95,6 +99,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "NIBCO",
+        brandKey: "NIBCO",
         subtitle: "Bronze Gate Valves — Fire Protection",
         description:
           "175 PSI WWP Dezincification Resistant Bronze Gate Valves for fire protection service. Screw-Over Bonnet, Outside Screw and Yoke, Solid Wedge design. 175 PSI/12.1 Bar Non-Shock Cold Water (400 PSI Non-Shock CWP General Service).",
@@ -119,6 +124,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "WIKA",
+        brandKey: "WIKA",
         subtitle: "Pressure, Temperature & Level Measurement Solutions",
         description:
           "Over the past 75 years, WIKA has established a reputation as a renowned partner and competent specialist in the field of measurement technology. Through steadily increasing efficiency, innovative technologies are employed in the development of new products and system solutions. The reliability of WIKA's products and its readiness to tackle market challenges have been key factors in achieving a leading position in the global market.",
@@ -140,6 +146,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "HITACHI METALS, LTD — Gourd Brand",
+        brandKey: "HITACHI METALS",
         subtitle: "Class 150 Malleable Iron Pipe Fittings",
         description:
           "Gourd Brand malleable iron pipe fittings are manufactured by Hitachi Metals, Ltd., the leading manufacturer of malleable iron pipe fittings in the world with a century of experience. The Gourd Brand has lived up to its reputation for excellence in quality, variety, and punctual delivery, known the world over.",
@@ -158,6 +165,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "BOTH-WELL",
+        brandKey: "BOTH-WELL",
         subtitle: "High Pressure Forged Fittings — Threaded & Socket-Weld",
         description:
           "Ever since its establishment in 1985, BOTH-WELL has been well-recognized among customers worldwide for excellence of Quality and Services. ISO 9001, 14001, 45001, PED certified; approved vendor for Aramco and listed on Approval Supplier Lists of major domestic refineries and petrochemical factories.",
@@ -174,6 +182,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "BENKAN",
+        brandKey: "BENKAN",
         subtitle: "Butt Weld Fittings",
         description:
           "Benkan Co. Ltd., the world's most renowned manufacturer of high quality Buttweld Fittings with over thirty years of experience. They maintain competitive prices, building credibility, and are continuously improving the effectiveness of their Quality Management System.",
@@ -188,6 +197,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "NATIONAL",
+        brandKey: "NATIONAL",
         subtitle: "Grooved Fittings, Mechanical Couplings & Related Products",
         description:
           "National — 'a step up in value, a step down in cost.' An ISO 9001 certified company providing a comprehensive range of grooved piping system components.",
@@ -211,6 +221,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Grooved Mechanical Couplings",
+        brandKey: "SHURJOINT",
         subtitle: "Rigid & Flexible Couplings — ½\" to 104\", 3000+ Components",
         description:
           "With over four decades of experience, Shurjoint is a world leader in mechanical piping components offering 3000+ products from ½\" to 104\" for carbon steel, stainless steel, ductile iron, PVC, HDPE, CPVC, and copper tubing. Applications: HVAC, fire protection, water supply & treatment, oil & gas, chemical, marine, mining, municipal, food processing, desalination, and reverse osmosis.",
@@ -236,6 +247,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Flange Adapters & Mechanical Tees",
+        brandKey: "SHURJOINT",
         subtitle: "Grooved-to-Flange Adapters ANSI Class 125/150/300 & Mechanical Tees",
         description:
           "Shurjoint flange adapters and mechanical tees convert grooved piping to flanged connections or add branch outlets without cutting pipe.",
@@ -256,6 +268,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Cast & Wrought Grooved Fittings",
+        brandKey: "SHURJOINT",
         subtitle: "Ductile Iron, Wrought Steel & Extra Heavy Grooved Fittings — Up to 24\"",
         description:
           "Shurjoint grooved-end fittings meet ASTM F1548 and ANSI/AWWA C606. Ductile iron per ASTM A536 Gr. 65-45-12. Available painted, hot-dip galvanized, or epoxy coated.",
@@ -276,6 +289,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Stainless Steel Series",
+        brandKey: "SHURJOINT",
         subtitle: "SS Grooved Couplings, Fittings, Flange Adapters, Ball & Butterfly Valves — 1\" to 24\"",
         description:
           "Shurjoint stainless steel grooved components in CF8 (304) and CF8M (316) for general service, plus specialty alloys for reverse osmosis and desalination. Sizes 1\" to 24\".",
@@ -298,6 +312,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Valves & Flow Control Components",
+        brandKey: "SHURJOINT",
         subtitle: "Butterfly, Ball, Check Valves, Strainers & Expansion Joints",
         description:
           "Shurjoint grooved-end valves install 3–4× faster than flanged equivalents. Full range from butterfly to check valves, suction diffusers, strainers, and expansion joints.",
@@ -320,6 +335,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Threaded Fittings (Ductile Iron Class 300)",
+        brandKey: "SHURJOINT",
         subtitle: "UL Listed / FM Approved Threaded Fittings — ½\" to 2½\", 2000 psi rated",
         description:
           "Shurjoint ductile iron Class 300 threaded fittings are 100% air tested underwater. UL Listed and FM Approved. Tested to exceed 6,000 psi hydrostatic pressure. Designed to same dimensions as Class 150 malleable iron but with far superior strength.",
@@ -339,6 +355,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Ring Joint, Shouldered & Plain-End Couplings",
+        brandKey: "SHURJOINT",
         subtitle: "High Pressure Up to 3770 psi — Non-Grooved Pipe Joining Systems",
         description:
           "For pipe that is difficult to groove or where grooving is not practical. Ring joint gaskets provide 2–3× the shearing force of roll-grooved systems. Ideal for mining, oil field, and heavy industry.",
@@ -360,6 +377,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Copper Tubing Grooved Series",
+        brandKey: "SHURJOINT",
         subtitle: "Grooved Couplings, Fittings & Valves for Copper Tubing (CTS) — 2\" to 6\"",
         description:
           "The most complete grooved copper tubing system available. No heat or solder required. NSF/ANSI 61 and 372 compliant for potable water. Wrought copper (ASTM B75, 99.9% copper) and lead-free bronze castings.",
@@ -380,6 +398,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — HDPE Series",
+        brandKey: "SHURJOINT",
         subtitle: "HDPE Couplings, Transition Couplings & Flange Adapters — 2\" to 20\" IPS / ISO",
         description:
           "Shurjoint offers a complete series of HDPE couplings and adapters for joining HDPE pipe. HDPE pipe benefits include longer service life, increased flexibility, reduced weight, and superior resistance to corrosion, chemicals, and fatigue. The Shurjoint joining method eliminates the need for costly heat fusion equipment. Designed to join IPS HDPE pipe DR32.5 to 7.3, conforming to ASTM D2513, D3350 and/or ANSI/AWWA C901, and ISO HDPE pipe SDR 9 to 26, conforming to ISO 4427-1/2. Applications: municipal water & wastewater, water distribution & transport, mining, slurry, and general industrial.",
@@ -399,6 +418,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — AWWA Ductile Iron Series",
+        brandKey: "SHURJOINT",
         subtitle: "Grooved Couplings & Fittings for AWWA Ductile Iron Pipe — 3\" to 12\"",
         description:
           "Shurjoint AWWA grooved mechanical couplings and fittings for ductile iron pipe per AWWA C606 radius cut groove specifications. Two-piece housing with GapSeal gasket for leak-tight seal.",
@@ -417,6 +437,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "Stainless Steel Fittings",
+        brandKey: "SS FITTINGS",
         subtitle: "Threaded & Butt-Weld Stainless Steel Fittings",
         description:
           "We stock a comprehensive range of stainless steel fittings for demanding industrial applications, including 316L stainless fittings with high approval rates for major construction projects.",
@@ -432,6 +453,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "Copper Fittings & Tubes",
+        brandKey: "COPPER FITTINGS",
         subtitle: "Copper Pipe Fittings and Seamless Tubes",
         description:
           "Modern technology recognizes copper as the prime material for conveying water. We supply copper tubes and fittings for all kinds of buildings: single-family homes, high-rise apartments, industrial, commercial and office buildings.",
@@ -446,6 +468,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "INTERPIPE",
+        brandKey: "INTERPIPE",
         subtitle: "Seamless Steel Pipes",
         description:
           "Interpipe is a global producer of steel pipes for all major fields of application — oil & gas exploration and transportation, power generation, mechanical and structural use. They supply pipe products to more than 80 countries in the world through a network of sales offices in Ukraine, Russia, Kazakhstan, Europe, the USA and the Gulf.",
@@ -466,6 +489,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "POTTER — VSR Waterflow Alarm Switch",
+        brandKey: "POTTER",
         subtitle: "Vane Type Waterflow Alarm Switch with Retard",
         description:
           "Since 1898, Potter has been committed to holding themselves to the highest standards of excellence. The Model VSR is a vane type waterflow switch for use on wet sprinkler systems. UL Listed and FM Approved for multiple pipe schedules and sizes.",
@@ -493,6 +517,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "MR-FLEX",
+        brandKey: "MR-FLEX",
         subtitle: "Rubber & Flexible Expansion Joints",
         description:
           "Our Mr. Flex expansion joints are far superior to alternatives in the Saudi Arabian market. While most expansion joints in the Kingdom can only withstand approximately ten bars of pressure, Mr. Flex offers 16 bars of pressure in most of its sizes. Mr. Flex is renowned for its reliability and specifically its durability.",
@@ -505,6 +530,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "Axial Type Expansion Joints (HLS-60MKD-L)",
+        brandKey: "AXIAL JOINTS",
         subtitle: "Metal Bellows Axial Expansion Joints — Stainless Steel",
         description:
           "Axial expansion joints absorb expansion axially, caused by the thermal difference of the media inside the pipeline. Designed to absorb lateral movement of 30mm and 60mm. The main part is a stainless steel corrugated bellow.",
@@ -524,6 +550,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SS-EXP-JOINT (HLS-60MKD-L)",
+        brandKey: "SS EXP JOINT",
         subtitle: "Stainless Steel Expansion Joint — -40/+20mm Absorption",
         description:
           "Stainless steel expansion joint designed for axial absorption of -40mm to +20mm movement in pipeline systems, suitable for thermal expansion in demanding industrial environments.",
@@ -541,10 +568,11 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     color: "from-purple-700 to-purple-900",
     items: [
       {
-        brand: "NEUMERIA",
+        brand: "NEUMIRA",
+        brandKey: "NEUMIRA",
         subtitle: "Forged Piping Products & Flanges",
         description:
-          "Neumeria is a company focused on goods associated with piping, forging products, and pieces under customer drawings made with material grades of all kinds — general engineering steels, stainless steels, and resistant special alloys for extreme working conditions. Their target is obtaining total satisfaction of the customer, collaborating in the definition and execution of projects, anticipating future necessities.",
+          "Neumira is a company focused on goods associated with piping, forging products, and pieces under customer drawings made with material grades of all kinds — general engineering steels, stainless steels, and resistant special alloys for extreme working conditions. Their target is obtaining total satisfaction of the customer, collaborating in the definition and execution of projects, anticipating future necessities.",
         specs: [
           "Carbon steel flanges",
           "Stainless steel flanges",
@@ -563,6 +591,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "Al-Iman Gasket Factory",
+        brandKey: "AL-IMAN",
         subtitle: "Industrial Gaskets — German Management, International Standards",
         description:
           "Al-Iman Gasket Factory is under German management and has been in active operation since 1988. It has established a renowned name delivering high quality gasket products proven by international standards. Their gaskets have been successfully used for many years by the OIL / GAS / Petrochemical industries including Saudi Aramco.",
@@ -584,6 +613,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "WATTS",
+        brandKey: "WATTS",
         subtitle: "Water Products & Pressure Reducing Valves",
         description:
           "Watts is a global leader in quality water solutions for residential, industrial, municipal, and commercial settings. Their family of brands offers one of the most diverse product lines in the world, delivering world-class water-related solutions.",
@@ -605,6 +635,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "Pipe Hangers and Support System",
+        brandKey: "PIPE HANGERS",
         subtitle: "Clamps, Hangers & Pipe Support Products",
         description:
           "We supply a comprehensive range of pipe hangers and support system products for all types of piping installations — from residential plumbing to industrial fire protection systems.",
@@ -630,6 +661,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "Mueller Taiwan — Dielectric Unions",
+        brandKey: "MUELLER TAIWAN",
         subtitle: "High Quality Dielectric Unions for Corrosion Prevention",
         description:
           "With the market saturated with inferior Dielectric Unions, we provide our customers with world-renowned and high-quality Dielectric Unions from Mueller Taiwan. The Taiwanese-based firm has optimized massive production capabilities with several factories preventing accelerated corrosion and deterioration in piping systems.",
@@ -649,6 +681,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
     items: [
       {
         brand: "SHURJOINT — Pipe End Preparation & Roll Grooving Dimensions",
+        brandKey: "SHURJOINT",
         subtitle: "Roll Grooving Tables for ANSI, BS, AS, ISO, KS, JIS & Large Diameter Pipe",
         description:
           "Shurjoint grooved piping systems require roll or cut grooves processed to pipe ends. Proper groove processing is integral to a secure, leak-tight joint. Shurjoint provides comprehensive grooving dimension tables for all major pipe standards. Roll grooves are applicable to pipe ≤0.375\"/9.5mm wall; heavy wall pipe should use cut-grooves. ERW and galvanized pipe are acceptable with proper surface preparation.",
@@ -673,6 +706,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Gasket Selection Guide & UL/FM Fire Protection Ratings",
+        brandKey: "SHURJOINT",
         subtitle: "Gasket Grade Index, NSF/ANSI 61, IAPMO, UL/FM Pressure Ratings for Fire Protection",
         description:
           "Shurjoint gaskets are engineered to ASTM D2000, AWWA C606, NSF61, and IAPMO standards. The fire protection series covers 600+ components listed/approved by UL, FM, VdS, and LPCB. Minimum working pressure for fire protection is 175 psi (12.3 Bar) per NFPA 13. Gasket grade selection requires careful consideration of temperature, fluid media, concentration, and service continuity.",
@@ -699,6 +733,7 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
       },
       {
         brand: "SHURJOINT — Anchoring, Hangers, Supports & Seismic Bracing",
+        brandKey: "SHURJOINT",
         subtitle: "NFPA 13 & ANSI B31.1/B31.9 Compliant Hanger Spacing, Riser Support & Sway Bracing",
         description:
           "NFPA 13 defines a flexible coupling as allowing axial displacement, rotation, and ≥1° angular movement (≥0.5° for 8\" and larger). All pipe runs must be adequately suspended by rod hangers or steel angles attached to building structure. Hangers and components must be ferrous.",
@@ -719,11 +754,26 @@ const products: { category: string; color: string; items: ProductItem[] }[] = [
   },
 ];
 
+// Build brand-to-division and division-to-brand maps
+const allDivisions = products.map((p) => p.category);
+const brandToDivisions: Record<string, Set<string>> = {};
+const divisionToBrands: Record<string, Set<string>> = {};
+
+products.forEach((cat) => {
+  if (!divisionToBrands[cat.category]) divisionToBrands[cat.category] = new Set();
+  cat.items.forEach((item) => {
+    divisionToBrands[cat.category].add(item.brandKey);
+    if (!brandToDivisions[item.brandKey]) brandToDivisions[item.brandKey] = new Set();
+    brandToDivisions[item.brandKey].add(cat.category);
+  });
+});
+
+const allBrandKeys = Array.from(new Set(products.flatMap((p) => p.items.map((i) => i.brandKey))));
+
 const ProductCard = ({ item }: { item: ProductItem }) => {
   const [expanded, setExpanded] = useState(false);
   return (
     <div className="bg-card rounded-2xl border border-border card-shadow hover:elevated-shadow transition-all duration-200 overflow-hidden">
-      {/* Product Image */}
       {item.image && (
         <div className="relative overflow-hidden group cursor-pointer bg-white" onClick={() => setExpanded(!expanded)}>
           <img
@@ -772,56 +822,135 @@ const ProductCard = ({ item }: { item: ProductItem }) => {
 };
 
 const ProductsPage = () => {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
 
-  const filtered = activeCategory
-    ? products.filter((p) => p.category === activeCategory)
-    : products;
+  // Compute which divisions and brands are available based on selections
+  const availableDivisions = useMemo(() => {
+    if (!selectedBrand) return new Set(allDivisions);
+    return brandToDivisions[selectedBrand] || new Set();
+  }, [selectedBrand]);
+
+  const availableBrands = useMemo(() => {
+    if (!selectedDivision) return new Set(allBrandKeys);
+    return divisionToBrands[selectedDivision] || new Set();
+  }, [selectedDivision]);
+
+  // Filter products
+  const filtered = useMemo(() => {
+    return products
+      .filter((p) => !selectedDivision || p.category === selectedDivision)
+      .map((p) => ({
+        ...p,
+        items: p.items.filter((item) => !selectedBrand || item.brandKey === selectedBrand),
+      }))
+      .filter((p) => p.items.length > 0);
+  }, [selectedDivision, selectedBrand]);
+
+  const clearFilters = () => {
+    setSelectedDivision(null);
+    setSelectedBrand(null);
+  };
 
   return (
     <main>
-      {/* Header */}
-      <section className="gradient-primary py-20 text-primary-foreground" aria-label="Products page header">
+      {/* Header — slim banner */}
+      <section className="gradient-primary py-12 text-primary-foreground" aria-label="Products page header">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-white/80 font-semibold text-sm uppercase tracking-widest mb-3">Our Portfolio</p>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-5">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-white">
             Products & Brands
           </h1>
-          <p className="text-white/80 max-w-2xl mx-auto text-lg">
-            Comprehensive range of certified mechanical and industrial products from the world's leading manufacturers.
-            All products come with full manufacturer certifications and approvals.
-          </p>
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="bg-muted border-b border-border sticky top-[72px] z-30" aria-label="Filter by category">
-        <div className="container mx-auto px-4 py-4 overflow-x-auto">
-          <div className="flex gap-2 min-w-max">
-            <button
-              onClick={() => setActiveCategory(null)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                activeCategory === null
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-card text-muted-foreground hover:bg-secondary border border-border"
-              }`}
-            >
-              All Categories
-            </button>
-            {products.map((p) => (
+      {/* Filters */}
+      <section className="bg-muted border-b border-border sticky top-[72px] z-30" aria-label="Filter products">
+        <div className="container mx-auto px-4 py-4">
+          {/* Division filters */}
+          <div className="mb-3">
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Filter by Division</div>
+            <div className="flex gap-2 flex-wrap">
               <button
-                key={p.category}
-                onClick={() => setActiveCategory(activeCategory === p.category ? null : p.category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                  activeCategory === p.category
+                onClick={() => { setSelectedDivision(null); if (selectedBrand) setSelectedBrand(null); }}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
+                  !selectedDivision
                     ? "bg-primary text-primary-foreground"
                     : "bg-card text-muted-foreground hover:bg-secondary border border-border"
                 }`}
               >
-                {p.category}
+                All Divisions
               </button>
-            ))}
+              {allDivisions.map((div) => {
+                const isAvailable = availableDivisions.has(div);
+                const isActive = selectedDivision === div;
+                return (
+                  <button
+                    key={div}
+                    onClick={() => {
+                      if (!isAvailable) return;
+                      setSelectedDivision(isActive ? null : div);
+                    }}
+                    disabled={!isAvailable}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : isAvailable
+                          ? "bg-card text-muted-foreground hover:bg-secondary border border-border"
+                          : "bg-card/50 text-muted-foreground/40 border border-border/50 cursor-not-allowed opacity-40"
+                    }`}
+                  >
+                    {div}
+                  </button>
+                );
+              })}
+            </div>
           </div>
+
+          {/* Brand filters */}
+          <div>
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Filter by Brand</div>
+            <div className="flex gap-2 flex-wrap">
+              <button
+                onClick={() => { setSelectedBrand(null); if (selectedDivision) setSelectedDivision(null); }}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
+                  !selectedBrand
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card text-muted-foreground hover:bg-secondary border border-border"
+                }`}
+              >
+                All Brands
+              </button>
+              {allBrandKeys.map((brand) => {
+                const isAvailable = availableBrands.has(brand);
+                const isActive = selectedBrand === brand;
+                return (
+                  <button
+                    key={brand}
+                    onClick={() => {
+                      if (!isAvailable) return;
+                      setSelectedBrand(isActive ? null : brand);
+                    }}
+                    disabled={!isAvailable}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : isAvailable
+                          ? "bg-card text-muted-foreground hover:bg-secondary border border-border"
+                          : "bg-card/50 text-muted-foreground/40 border border-border/50 cursor-not-allowed opacity-40"
+                    }`}
+                  >
+                    {brand}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {(selectedDivision || selectedBrand) && (
+            <button onClick={clearFilters} className="mt-3 text-xs text-accent hover:underline font-medium">
+              ✕ Clear all filters
+            </button>
+          )}
         </div>
       </section>
 
@@ -844,6 +973,22 @@ const ProductsPage = () => {
               </div>
             </div>
           ))}
+          {filtered.length === 0 && (
+            <div className="text-center py-20 text-muted-foreground">
+              <p className="text-lg font-medium">No products match the selected filters.</p>
+              <button onClick={clearFilters} className="mt-3 text-accent hover:underline font-medium">Clear filters</button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Certification text */}
+      <section className="py-12 bg-background border-t border-border" aria-label="Product certifications">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-muted-foreground max-w-3xl mx-auto text-base leading-relaxed">
+            Comprehensive range of certified mechanical and industrial products from the world's leading manufacturers.
+            All products come with full manufacturer certifications and approvals.
+          </p>
         </div>
       </section>
 
