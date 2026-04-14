@@ -8,6 +8,16 @@ import brandPegler from "@/assets/brand-pegler.jpg";
 import brandBenkan from "@/assets/brand-benkan.png";
 import brandPotter from "@/assets/brand-potter.png";
 import brandInterpipe from "@/assets/brand-interpipe.png";
+import brandShurjoint from "@/assets/brand-shurjoint.png";
+import brandHitachi from "@/assets/brand-hitachi.jpg";
+import brandNeumira from "@/assets/brand-neumira.jpg";
+import brandEci from "@/assets/brand-eci.png";
+import brandMrflex from "@/assets/brand-mrflex.jpg";
+import brandNational from "@/assets/brand-national.jpg";
+import brandBothwell from "@/assets/brand-bothwell.png";
+import brandUnid from "@/assets/brand-unid.png";
+import brandNibco from "@/assets/brand-nibco.png";
+import brandJtpr from "@/assets/brand-jtpr.jpg";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Phone, Mail, MapPin } from "lucide-react";
 
@@ -20,15 +30,16 @@ const brands = [
   { name: "BENKAN", logo: brandBenkan },
   { name: "POTTER", logo: brandPotter },
   { name: "INTERPIPE", logo: brandInterpipe },
-  { name: "SHURJOINT", logo: null },
-  { name: "HITACHI METALS, LTD", logo: null },
-  { name: "TL EUROPEAN CASTING", logo: null },
-  { name: "MetroPast", logo: null },
-  { name: "NEUMERIA", logo: null },
-  { name: "MR-FLEX", logo: null },
-  { name: "NATIONAL", logo: null },
-  { name: "BOTH-WELL", logo: null },
-  { name: "UNID", logo: null },
+  { name: "SHURJOINT", logo: brandShurjoint },
+  { name: "HITACHI METALS, LTD", logo: brandHitachi },
+  { name: "EUROPEAN CASTING INDUSTRY", logo: brandEci },
+  { name: "NEUMIRA", logo: brandNeumira },
+  { name: "MR-FLEX", logo: brandMrflex },
+  { name: "NATIONAL", logo: brandNational },
+  { name: "BOTH-WELL", logo: brandBothwell },
+  { name: "UNID", logo: brandUnid },
+  { name: "NIBCO", logo: brandNibco },
+  { name: "SHANDONG JINTONG PIPELINE CO.,LTD", logo: brandJtpr },
 ];
 
 const sectors = [
