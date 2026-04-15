@@ -775,14 +775,14 @@ const ProductCard = ({ item }: { item: ProductItem }) => {
   return (
     <div className="bg-card rounded-2xl border border-border card-shadow hover:elevated-shadow transition-all duration-200 overflow-hidden">
       {item.image && (
-        <div className="relative overflow-hidden group cursor-pointer bg-white" onClick={() => setExpanded(!expanded)}>
+        <div className="relative overflow-hidden group cursor-pointer bg-white shadow-md" onClick={() => setExpanded(!expanded)}>
           <img
             src={item.image}
             alt={`${item.brand} products`}
             loading="lazy"
             width={800}
             height={600}
-            className="w-full h-72 object-contain p-4 transition-transform duration-1000 ease-out group-hover:scale-110"
+            className="w-full h-72 object-contain p-4 bg-white transition-transform duration-1000 ease-out group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
         </div>
