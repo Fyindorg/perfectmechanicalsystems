@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 // Product images — updated with high-quality matched images
 import craneValvesImg from "@/assets/products/crane-ball-valve.webp";
@@ -895,6 +896,7 @@ const FilterSection = ({
 };
 
 const ProductsPage = () => {
+  const { t } = useLanguage();
   const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
 
