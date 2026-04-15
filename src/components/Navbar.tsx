@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, Phone, Mail, Globe } from "lucide-react";
 import pmsLogo from "@/assets/pms-logo.png";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { language, setLanguage, t, isRTL } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -18,22 +20,27 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location]);
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About Us" },
-    { href: "/products", label: "Products" },
-    { href: "/contact", label: "Contact" },
+  const navLinksEn = [
+    { href: "/", label: t("nav.home") },
+    { href: "/about", label: t("nav.about") },
+    { href: "/products", label: t("nav.products") },
+    { href: "/contact", label: t("nav.contact") },
   ];
+
+  // Reverse order for Arabic: Contact, Products, About Us, Home
+  const navLinks = isRTL ? [...navLinksEn].reverse() : navLinksEn;
 
   const isActive = (href: string) =>
     href === "/" ? location.pathname === "/" : location.pathname.startsWith(href);
+
+  const toggleLanguage = () => setLanguage(language === "en" ? "ar" : "en");
 
   return (
     <>
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground py-2 hidden md:block">
         <div className="container mx-auto flex justify-between items-center text-xs font-medium">
-          <span className="opacity-90">Your Trusted Partner for Electro-Mechanical Products in Saudi Arabia</span>
+          <span className="opacity-90">{t("nav.topBar")}</span>
           <div className="flex items-center gap-6">
             <a href="tel:+966551040126" className="flex items-center gap-1.5 hover:opacity-75 transition-opacity">
               <Phone size={12} />
@@ -47,7 +54,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Main navbar — white background */}
+      {/* Main navbar */}
       <header
         className={`sticky top-0 z-50 bg-white transition-all duration-300 ${
           scrolled ? "shadow-md" : "border-b border-gray-100"
@@ -83,23 +90,43 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* CTA */}
-          <a
-            href="tel:+966551040126"
-            className="hidden md:flex items-center gap-2 bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-md hover:bg-primary-dark transition-colors shadow-sm"
-          >
-            <Phone size={14} />
-            Call Us
-          </a>
+          <div className="hidden md:flex items-center gap-3">
+            {/* Language toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1.5 text-sm font-medium text-primary border border-primary/30 px-3 py-2 rounded-md hover:bg-primary/10 transition-colors"
+              aria-label="Switch language"
+            >
+              <Globe size={14} />
+              {language === "en" ? "العربية" : "English"}
+            </button>
+            {/* CTA */}
+            <a
+              href="tel:+966551040126"
+              className="flex items-center gap-2 bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-md hover:bg-primary-dark transition-colors shadow-sm"
+            >
+              <Phone size={14} />
+              {t("nav.callUs")}
+            </a>
+          </div>
 
           {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-primary p-2 rounded-md hover:bg-primary/10 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleLanguage}
+              className="text-primary p-2 rounded-md hover:bg-primary/10 transition-colors text-xs font-bold"
+              aria-label="Switch language"
+            >
+              <Globe size={20} />
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-primary p-2 rounded-md hover:bg-primary/10 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </nav>
 
         {/* Mobile Menu */}
