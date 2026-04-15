@@ -821,22 +821,93 @@ const ProductCard = ({ item }: { item: ProductItem }) => {
   );
 };
 
+const VISIBLE_COUNT = 5;
+
+const FilterSection = ({
+  title,
+  items,
+  selected,
+  available,
+  onSelect,
+  onClear,
+}: {
+  title: string;
+  items: string[];
+  selected: string | null;
+  available: Set<string>;
+  onSelect: (val: string | null) => void;
+  onClear: () => void;
+}) => {
+  const [showAll, setShowAll] = useState(false);
+  const visible = showAll ? items : items.slice(0, VISIBLE_COUNT);
+  const hasMore = items.length > VISIBLE_COUNT;
+
+  return (
+    <div className="mb-6">
+      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+        {title}
+      </div>
+      <div className="space-y-1">
+        <button
+          onClick={() => { onClear(); }}
+          className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+            !selected
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:bg-secondary"
+          }`}
+        >
+          All
+        </button>
+        {visible.map((item) => {
+          const isAvailable = available.has(item);
+          const isActive = selected === item;
+          return (
+            <button
+              key={item}
+              onClick={() => {
+                if (!isAvailable) return;
+                onSelect(isActive ? null : item);
+              }}
+              disabled={!isAvailable}
+              className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                isActive
+                  ? "bg-primary text-primary-foreground"
+                  : isAvailable
+                    ? "text-muted-foreground hover:bg-secondary"
+                    : "text-muted-foreground/30 cursor-not-allowed"
+              }`}
+            >
+              {item}
+            </button>
+          );
+        })}
+      </div>
+      {hasMore && (
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="mt-2 text-xs text-accent hover:underline font-medium px-3"
+        >
+          {showAll ? "Show less" : `View more (${items.length - VISIBLE_COUNT})`}
+        </button>
+      )}
+    </div>
+  );
+};
+
 const ProductsPage = () => {
   const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
 
-  // Compute which divisions and brands are available based on selections
-  const availableDivisions = useMemo(() => {
-    if (!selectedBrand) return new Set(allDivisions);
-    return brandToDivisions[selectedBrand] || new Set();
+  const availableDivisions = useMemo<Set<string>>(() => {
+    if (!selectedBrand) return new Set<string>(allDivisions);
+    return brandToDivisions[selectedBrand] || new Set<string>();
   }, [selectedBrand]);
 
-  const availableBrands = useMemo(() => {
-    if (!selectedDivision) return new Set(allBrandKeys);
-    return divisionToBrands[selectedDivision] || new Set();
+  const availableBrands = useMemo<Set<string>>(() => {
+    if (!selectedDivision) return new Set<string>(allBrandKeys);
+    return divisionToBrands[selectedDivision] || new Set<string>();
   }, [selectedDivision]);
 
-  // Filter products
   const filtered = useMemo(() => {
     return products
       .filter((p) => !selectedDivision || p.category === selectedDivision)
@@ -863,122 +934,61 @@ const ProductsPage = () => {
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="bg-muted border-b border-border sticky top-[72px] z-30" aria-label="Filter products">
-        <div className="container mx-auto px-4 py-4">
-          {/* Division filters */}
-          <div className="mb-3">
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Filter by Division</div>
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => { setSelectedDivision(null); if (selectedBrand) setSelectedBrand(null); }}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                  !selectedDivision
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card text-muted-foreground hover:bg-secondary border border-border"
-                }`}
-              >
-                All Divisions
-              </button>
-              {allDivisions.map((div) => {
-                const isAvailable = availableDivisions.has(div);
-                const isActive = selectedDivision === div;
-                return (
-                  <button
-                    key={div}
-                    onClick={() => {
-                      if (!isAvailable) return;
-                      setSelectedDivision(isActive ? null : div);
-                    }}
-                    disabled={!isAvailable}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                      isActive
-                        ? "bg-primary text-primary-foreground"
-                        : isAvailable
-                          ? "bg-card text-muted-foreground hover:bg-secondary border border-border"
-                          : "bg-card/50 text-muted-foreground/40 border border-border/50 cursor-not-allowed opacity-40"
-                    }`}
-                  >
-                    {div}
-                  </button>
-                );
-              })}
+      {/* Main content with sidebar */}
+      <section className="py-10 bg-background" aria-label="Product catalog">
+        <div className="container mx-auto px-4 flex flex-col lg:flex-row gap-8">
+          {/* Left sidebar filters */}
+          <aside className="lg:w-64 flex-shrink-0">
+            <div className="lg:sticky lg:top-[90px] bg-card border border-border rounded-xl p-5">
+              <FilterSection
+                title="Filter by Division"
+                items={allDivisions}
+                selected={selectedDivision}
+                available={availableDivisions}
+                onSelect={setSelectedDivision}
+                onClear={() => { setSelectedDivision(null); setSelectedBrand(null); }}
+              />
+              <FilterSection
+                title="Filter by Brand"
+                items={allBrandKeys}
+                selected={selectedBrand}
+                available={availableBrands}
+                onSelect={setSelectedBrand}
+                onClear={() => { setSelectedBrand(null); setSelectedDivision(null); }}
+              />
+              {(selectedDivision || selectedBrand) && (
+                <button onClick={clearFilters} className="text-xs text-accent hover:underline font-medium">
+                  ✕ Clear all filters
+                </button>
+              )}
             </div>
-          </div>
+          </aside>
 
-          {/* Brand filters */}
-          <div>
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Filter by Brand</div>
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => { setSelectedBrand(null); if (selectedDivision) setSelectedDivision(null); }}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                  !selectedBrand
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card text-muted-foreground hover:bg-secondary border border-border"
-                }`}
-              >
-                All Brands
-              </button>
-              {allBrandKeys.map((brand) => {
-                const isAvailable = availableBrands.has(brand);
-                const isActive = selectedBrand === brand;
-                return (
-                  <button
-                    key={brand}
-                    onClick={() => {
-                      if (!isAvailable) return;
-                      setSelectedBrand(isActive ? null : brand);
-                    }}
-                    disabled={!isAvailable}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                      isActive
-                        ? "bg-primary text-primary-foreground"
-                        : isAvailable
-                          ? "bg-card text-muted-foreground hover:bg-secondary border border-border"
-                          : "bg-card/50 text-muted-foreground/40 border border-border/50 cursor-not-allowed opacity-40"
-                    }`}
-                  >
-                    {brand}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {(selectedDivision || selectedBrand) && (
-            <button onClick={clearFilters} className="mt-3 text-xs text-accent hover:underline font-medium">
-              ✕ Clear all filters
-            </button>
-          )}
-        </div>
-      </section>
-
-      {/* Products */}
-      <section className="py-16 bg-background" aria-label="Product catalog">
-        <div className="container mx-auto px-4 space-y-16">
-          {filtered.map((category) => (
-            <div key={category.category} id={category.category.replace(/\s+/g, "-").toLowerCase()}>
-              <div className="flex items-center gap-4 mb-8">
-                <div className={`h-10 w-1.5 rounded-full bg-gradient-to-b ${category.color}`} />
-                <div>
-                  <h2 className="text-2xl font-bold text-primary">{category.category}</h2>
-                  <p className="text-muted-foreground text-sm">{category.items.length} product line{category.items.length !== 1 ? "s" : ""}</p>
+          {/* Products grid */}
+          <div className="flex-1 space-y-16">
+            {filtered.map((category) => (
+              <div key={category.category} id={category.category.replace(/\s+/g, "-").toLowerCase()}>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className={`h-10 w-1.5 rounded-full bg-gradient-to-b ${category.color}`} />
+                  <div>
+                    <h2 className="text-2xl font-bold text-primary">{category.category}</h2>
+                    <p className="text-muted-foreground text-sm">{category.items.length} product line{category.items.length !== 1 ? "s" : ""}</p>
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {category.items.map((item) => (
+                    <ProductCard key={item.brand} item={item} />
+                  ))}
                 </div>
               </div>
-              <div className="grid lg:grid-cols-2 gap-4">
-                {category.items.map((item) => (
-                  <ProductCard key={item.brand} item={item} />
-                ))}
+            ))}
+            {filtered.length === 0 && (
+              <div className="text-center py-20 text-muted-foreground">
+                <p className="text-lg font-medium">No products match the selected filters.</p>
+                <button onClick={clearFilters} className="mt-3 text-accent hover:underline font-medium">Clear filters</button>
               </div>
-            </div>
-          ))}
-          {filtered.length === 0 && (
-            <div className="text-center py-20 text-muted-foreground">
-              <p className="text-lg font-medium">No products match the selected filters.</p>
-              <button onClick={clearFilters} className="mt-3 text-accent hover:underline font-medium">Clear filters</button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
 
