@@ -931,7 +931,7 @@ const ProductsPage = () => {
       <section className="gradient-primary py-12 text-primary-foreground" aria-label="Products page header">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-extrabold text-white">
-            Products & Brands
+            {t("products.title")}
           </h1>
         </div>
       </section>
@@ -943,7 +943,7 @@ const ProductsPage = () => {
           <aside className="lg:w-64 flex-shrink-0">
             <div className="lg:sticky lg:top-[90px] bg-card border border-border rounded-xl p-5">
               <FilterSection
-                title="Filter by Division"
+                title={t("products.filterByDivision")}
                 items={allDivisions}
                 selected={selectedDivision}
                 available={availableDivisions}
@@ -951,7 +951,7 @@ const ProductsPage = () => {
                 onClear={() => { setSelectedDivision(null); setSelectedBrand(null); }}
               />
               <FilterSection
-                title="Filter by Brand"
+                title={t("products.filterByBrand")}
                 items={allBrandKeys}
                 selected={selectedBrand}
                 available={availableBrands}
@@ -998,8 +998,7 @@ const ProductsPage = () => {
       <section className="py-12 bg-background border-t border-border" aria-label="Product certifications">
         <div className="container mx-auto px-4 text-center">
           <p className="text-muted-foreground max-w-3xl mx-auto text-base leading-relaxed">
-            Comprehensive range of certified mechanical and industrial products from the world's leading manufacturers.
-            All products come with full manufacturer certifications and approvals.
+            {t("products.certStatement")}
           </p>
         </div>
       </section>
@@ -1008,10 +1007,10 @@ const ProductsPage = () => {
       <section className="py-16 bg-muted border-t border-border" aria-label="Request a quote">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
-            Need a Quote or Product Information?
+            {t("products.needQuote")}
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-            Contact our team for competitive pricing, availability, and technical specifications on any of our products.
+            {t("products.quoteDesc")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
