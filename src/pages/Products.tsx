@@ -898,14 +898,14 @@ const ProductsPage = () => {
   const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
 
-  const availableDivisions = useMemo(() => {
-    if (!selectedBrand) return new Set(allDivisions);
-    return brandToDivisions[selectedBrand] || new Set();
+  const availableDivisions = useMemo<Set<string>>(() => {
+    if (!selectedBrand) return new Set<string>(allDivisions);
+    return brandToDivisions[selectedBrand] || new Set<string>();
   }, [selectedBrand]);
 
-  const availableBrands = useMemo(() => {
-    if (!selectedDivision) return new Set(allBrandKeys);
-    return divisionToBrands[selectedDivision] || new Set();
+  const availableBrands = useMemo<Set<string>>(() => {
+    if (!selectedDivision) return new Set<string>(allBrandKeys);
+    return divisionToBrands[selectedDivision] || new Set<string>();
   }, [selectedDivision]);
 
   const filtered = useMemo(() => {
