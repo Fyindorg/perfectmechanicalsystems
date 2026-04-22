@@ -61,11 +61,11 @@ const Navbar = () => {
           scrolled ? "bg-white/90 backdrop-blur-md shadow-md" : "bg-white border-b border-gray-100"
         }`}
       >
-        <nav className="container mx-auto flex items-center justify-between py-3">
+        <nav className="container mx-auto flex items-center justify-between gap-2 py-3 flex-nowrap">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group" aria-label="Perfect Mechanical System Est. - Home">
-            <img src={pmsLogo} alt="PMS Logo" className="h-12 w-auto" />
-            <div className="hidden sm:block">
+          <Link to="/" className="flex items-center gap-2 group flex-shrink-0" aria-label="Perfect Mechanical System Est. - Home">
+            <img src={pmsLogo} alt="PMS Logo" className="h-9 lg:h-12 w-auto" />
+            <div className="hidden xl:block">
               <div className="font-display font-bold text-primary text-base leading-tight tracking-tight">
                 Perfect Mechanical System
               </div>
@@ -74,12 +74,12 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <ul className="hidden md:flex items-center gap-1">
+          <ul className="hidden md:flex items-center gap-0.5 lg:gap-1 flex-nowrap">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   to={link.href}
-                  className={`px-5 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  className={`px-2.5 lg:px-5 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                     isActive(link.href)
                       ? "bg-primary text-white"
                       : "text-gray-700 hover:bg-primary/10 hover:text-primary"
@@ -91,20 +91,20 @@ const Navbar = () => {
             ))}
           </ul>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2 lg:gap-3 flex-shrink-0">
             {/* Language toggle */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 text-sm font-medium text-primary border border-primary/30 px-3 py-2 rounded-md hover:bg-primary/10 transition-colors"
+              className="flex items-center gap-1.5 text-xs lg:text-sm font-medium text-primary border border-primary/30 px-2 lg:px-3 py-2 rounded-md hover:bg-primary/10 transition-colors whitespace-nowrap"
               aria-label="Switch language"
             >
               <Globe size={14} />
-              {language === "en" ? "العربية" : "English"}
+              <span className="hidden lg:inline">{language === "en" ? "العربية" : "English"}</span>
             </button>
             {/* CTA */}
             <a
               href="tel:+966551040126"
-              className="flex items-center gap-2 bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-md hover:bg-primary-dark transition-colors shadow-sm"
+              className="flex items-center gap-2 bg-primary text-white font-semibold text-xs lg:text-sm px-3 lg:px-5 py-2.5 rounded-md hover:bg-primary-dark transition-colors shadow-sm whitespace-nowrap"
             >
               <Phone size={14} />
               {t("nav.callUs")}
