@@ -927,10 +927,12 @@ const ProductsPage = () => {
 
   return (
     <main>
-      {/* Header — slim banner */}
-      <section className="gradient-primary py-12 text-primary-foreground" aria-label="Products page header">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-white">
+      {/* Header — modern slim banner */}
+      <section className="relative overflow-hidden bg-primary py-14 md:py-16 text-primary-foreground" aria-label="Products page header">
+        <div className="absolute inset-0 gradient-mesh opacity-60" />
+        <div className="absolute inset-0 bg-dots opacity-10" />
+        <div className="relative container mx-auto px-4 text-center">
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-white">
             {t("products.title")}
           </h1>
         </div>

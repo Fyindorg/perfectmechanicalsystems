@@ -18,7 +18,13 @@ const translations: Record<string, Record<Language, string>> = {
   "nav.about": { en: "About Us", ar: "من نحن" },
   "nav.products": { en: "Products", ar: "المنتجات" },
   "nav.contact": { en: "Contact", ar: "اتصل بنا" },
+  "nav.catalogs": { en: "Catalogs", ar: "الكتالوجات" },
   "nav.callUs": { en: "Call Us", ar: "اتصل بنا" },
+  "catalogs.title": { en: "Product Catalogs", ar: "كتالوجات المنتجات" },
+  "catalogs.eyebrow": { en: "Resources", ar: "الموارد" },
+  "catalogs.desc": { en: "Browse and download official product catalogs from our partner brands. Click any catalog to open the full PDF.", ar: "تصفح وقم بتنزيل كتالوجات المنتجات الرسمية من علاماتنا التجارية الشريكة. انقر على أي كتالوج لفتح ملف PDF الكامل." },
+  "catalogs.view": { en: "View PDF", ar: "عرض PDF" },
+  "catalogs.download": { en: "Download", ar: "تنزيل" },
   "nav.topBar": { en: "Your Trusted Partner for Electro-Mechanical Products in Saudi Arabia", ar: "شريككم الموثوق لمنتجات الكهروميكانيكية في المملكة العربية السعودية" },
 
   // Hero

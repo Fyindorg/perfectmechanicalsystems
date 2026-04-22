@@ -24,6 +24,7 @@ const Navbar = () => {
     { href: "/", label: t("nav.home") },
     { href: "/about", label: t("nav.about") },
     { href: "/products", label: t("nav.products") },
+    { href: "/catalogs", label: t("nav.catalogs") },
     { href: "/contact", label: t("nav.contact") },
   ];
 
@@ -56,8 +57,8 @@ const Navbar = () => {
 
       {/* Main navbar */}
       <header
-        className={`sticky top-0 z-50 bg-white transition-all duration-300 ${
-          scrolled ? "shadow-md" : "border-b border-gray-100"
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          scrolled ? "bg-white/90 backdrop-blur-md shadow-md" : "bg-white border-b border-gray-100"
         }`}
       >
         <nav className="container mx-auto flex items-center justify-between py-3">
@@ -65,10 +66,10 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-3 group" aria-label="Perfect Mechanical System Est. - Home">
             <img src={pmsLogo} alt="PMS Logo" className="h-12 w-auto" />
             <div className="hidden sm:block">
-              <div className="font-bold text-primary text-base leading-tight">
+              <div className="font-display font-bold text-primary text-base leading-tight tracking-tight">
                 Perfect Mechanical System
               </div>
-              <div className="text-primary/60 text-xs font-medium tracking-wider">Est.</div>
+              <div className="text-primary/60 text-[10px] font-semibold tracking-[0.2em] uppercase">Est.</div>
             </div>
           </Link>
 

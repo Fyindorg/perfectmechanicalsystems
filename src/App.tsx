@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import AboutPage from "./pages/About";
 import ProductsPage from "./pages/Products";
 import ContactPage from "./pages/Contact";
+import CatalogsPage from "./pages/Catalogs";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import WhatsAppButton from "./components/WhatsAppButton";
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/catalogs" element={<CatalogsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
