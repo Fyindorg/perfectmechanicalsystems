@@ -16,6 +16,16 @@ const catalogs: Catalog[] = [
   { file: "Bothwell", title: "Bothwell" },
   { file: "Hels_Axial_Type_Expansion_Joints", title: "Hels Axial Type Expansion Joints" },
   { file: "Hels_Floating_Flanged_Expansion_Joints", title: "Hels Floating Flanged Expansion Joints" },
+  { file: "Shurjoint_File_1", title: "Shurjoint File 1" },
+  { file: "Shurjoint_File_2", title: "Shurjoint File 2" },
+  { file: "Shurjoint_File_3", title: "Shurjoint File 3" },
+  { file: "Shurjoint_File_4", title: "Shurjoint File 4" },
+  { file: "Shurjoint_File_5", title: "Shurjoint File 5" },
+  { file: "Shurjoint_File_6", title: "Shurjoint File 6" },
+  { file: "Shurjoint_File_7", title: "Shurjoint File 7" },
+  { file: "Shurjoint_File_8", title: "Shurjoint File 8" },
+  { file: "Shurjoint_File_9", title: "Shurjoint File 9" },
+  { file: "Shurjoint_File_10", title: "Shurjoint File 10" },
 ];
 
 const CatalogsPage = () => {
