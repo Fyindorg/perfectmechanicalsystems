@@ -26,6 +26,7 @@ const catalogs: Catalog[] = [
   { file: "Shurjoint_File_8", title: "Shurjoint File 8" },
   { file: "Shurjoint_File_9", title: "Shurjoint File 9" },
   { file: "Shurjoint_File_10", title: "Shurjoint File 10" },
+  { file: "Shurjoint_File_11", title: "Shurjoint File 11" },
 ];
 
 const CatalogsPage = () => {
