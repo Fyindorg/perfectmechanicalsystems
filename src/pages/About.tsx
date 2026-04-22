@@ -1,10 +1,8 @@
 import aboutBg from "@/assets/about-bg.jpg";
-import { CheckCircle, Award, Target, Heart, Phone, Mail, MapPin } from "lucide-react";
+import { CheckCircle, Award, Target, Heart, Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
-// Import brand logos (same as homepage)
 import brandCrane from "@/assets/brand-crane.jpg";
 import brandWika from "@/assets/brand-wika.png";
 import brandWatts from "@/assets/brand-watts.jpg";
@@ -61,129 +59,173 @@ const AboutPage = () => {
 
   return (
     <main>
-      {/* Page Header */}
-      <section
-        className="relative py-24 flex items-center justify-center"
-        style={{ backgroundImage: `url(${aboutBg})`, backgroundSize: "cover", backgroundPosition: "center" }}
-        aria-label="About Perfect Mechanical System Est."
-      >
-        <div className="absolute inset-0 hero-overlay" />
-        <div className="relative container mx-auto text-center px-4">
-          <p className="text-white/80 font-semibold text-sm uppercase tracking-widest mb-3">{t("about.header")}</p>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-5">{t("about.companyName")}</h1>
-          <p className="text-white/80 max-w-2xl mx-auto text-lg">{t("about.headerDesc")}</p>
+      {/* Header — split layout */}
+      <section className="relative overflow-hidden bg-primary text-primary-foreground" aria-label="About Perfect Mechanical System Est.">
+        <div
+          className="absolute inset-0 opacity-25"
+          style={{ backgroundImage: `url(${aboutBg})`, backgroundSize: "cover", backgroundPosition: "center" }}
+        />
+        <div className="absolute inset-0 gradient-mesh" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/90 via-primary/60 to-primary-dark/90" />
+        <div className="relative container mx-auto px-4 py-24 md:py-32">
+          <div className="max-w-3xl">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80 mb-4">
+              <span className="w-6 h-px bg-white/60" />
+              {t("about.header")}
+            </p>
+            <h1 className="font-display text-4xl md:text-6xl font-bold text-white mb-5 leading-tight">
+              {t("about.companyName")}
+            </h1>
+            <p className="text-white/80 text-base md:text-lg max-w-2xl leading-relaxed">{t("about.headerDesc")}</p>
+          </div>
         </div>
       </section>
 
-      {/* Company Introduction — full width sectors */}
-      <section className="py-20 bg-background" aria-labelledby="intro-heading">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <p className="text-accent font-semibold text-sm uppercase tracking-widest mb-3 text-center">{t("about.intro")}</p>
-            <h2 id="intro-heading" className="text-3xl md:text-4xl font-bold text-primary text-center mb-3">{t("about.whoWeAre")}</h2>
-            <div className="w-16 h-1 bg-accent rounded-full mx-auto mb-10" />
-            <p className="text-muted-foreground text-lg leading-relaxed mb-6 text-center">{t("about.introText")}</p>
-
-            {/* Sectors We Serve — full width */}
-            <div className="bg-card rounded-2xl p-8 card-shadow border border-border mt-12">
-              <div className="font-bold text-foreground text-lg mb-6 flex items-center gap-2">
-                <span className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white text-xs font-bold">SC</span>
-                {t("about.sectorsWeServe")}
+      {/* Intro + Sectors — modern asymmetric layout */}
+      <section className="py-20 md:py-28 bg-background relative overflow-hidden" aria-labelledby="intro-heading">
+        <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
+        <div className="container mx-auto px-4 relative">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
+            <div className="lg:col-span-5">
+              <p className="eyebrow mb-4">{t("about.intro")}</p>
+              <h2 id="intro-heading" className="font-display text-3xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+                {t("about.whoWeAre")}
+              </h2>
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">{t("about.introText")}</p>
+            </div>
+            <div className="lg:col-span-7">
+              <div className="bg-card rounded-3xl p-8 md:p-10 elevated-shadow border border-border">
+                <div className="flex items-center gap-3 mb-7">
+                  <div className="w-12 h-12 rounded-2xl gradient-primary flex items-center justify-center">
+                    <CheckCircle size={22} className="text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-widest text-primary">{t("about.intro")}</div>
+                    <div className="font-display text-xl font-bold text-foreground">{t("about.sectorsWeServe")}</div>
+                  </div>
+                </div>
+                <ul className="grid sm:grid-cols-2 gap-3">
+                  {sectors.map((s, i) => (
+                    <li
+                      key={s}
+                      className="flex items-start gap-3 p-4 rounded-xl bg-muted/60 hover:bg-primary/5 border border-transparent hover:border-primary/20 transition-colors"
+                    >
+                      <span className="font-display text-xs font-bold text-primary/40 w-5 mt-0.5">0{i + 1}</span>
+                      <span className="text-sm font-medium text-foreground">{s}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="grid sm:grid-cols-2 gap-4">
-                {sectors.map((s) => (
-                  <li key={s} className="flex items-center gap-2 text-sm text-foreground">
-                    <CheckCircle size={15} className="text-accent flex-shrink-0" />
-                    {s}
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Vision, Mission, Values */}
-      <section className="py-20 bg-muted" aria-labelledby="values-heading">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-14">
-            <p className="text-accent font-semibold text-sm uppercase tracking-widest mb-3">{t("about.foundation")}</p>
-            <h2 id="values-heading" className="text-3xl md:text-4xl font-bold text-primary mb-3">{t("about.vmv")}</h2>
-            <div className="w-16 h-1 bg-accent rounded-full mx-auto" />
+      {/* VMV */}
+      <section className="py-20 md:py-28 bg-muted relative overflow-hidden" aria-labelledby="values-heading">
+        <div className="absolute inset-0 bg-grid opacity-40" />
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-14 max-w-2xl mx-auto">
+            <p className="eyebrow justify-center mb-4">{t("about.foundation")}</p>
+            <h2 id="values-heading" className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3 leading-tight">
+              {t("about.vmv")}
+            </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {values.map((v) => (
-              <div key={v.title} className="bg-card rounded-2xl p-8 card-shadow border border-border hover:elevated-shadow transition-all duration-200">
-                <div className="w-14 h-14 gradient-primary rounded-xl flex items-center justify-center mb-5">
-                  <v.icon size={26} className="text-primary-foreground" />
+          <div className="grid md:grid-cols-3 gap-6">
+            {values.map((v, i) => (
+              <div
+                key={v.title}
+                className="group bg-card rounded-3xl p-8 soft-shadow hover:elevated-shadow hover:-translate-y-1 transition-all duration-300 border border-border relative overflow-hidden"
+              >
+                <div className="absolute top-4 right-4 font-display text-6xl font-bold text-primary/5 group-hover:text-primary/10 transition-colors">
+                  0{i + 1}
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{v.title}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">{v.description}</p>
+                <div className="relative">
+                  <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center mb-6">
+                    <v.icon size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-display text-2xl font-bold text-foreground mb-3">{v.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{v.description}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Authorized Distributor */}
-      <section className="py-16 gradient-primary text-primary-foreground" aria-label="Authorized distributor">
-        <div className="container mx-auto px-4 text-center">
-          <Award size={48} className="text-accent mx-auto mb-5" />
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{t("about.authDistributor")}</h2>
-          <p className="text-white/80 max-w-2xl mx-auto text-base">{t("about.authDesc")}</p>
+      {/* Authorized distributor */}
+      <section className="py-20 md:py-24 relative overflow-hidden bg-primary text-primary-foreground" aria-label="Authorized distributor">
+        <div className="absolute inset-0 gradient-mesh opacity-70" />
+        <div className="container mx-auto px-4 text-center relative max-w-3xl">
+          <div className="inline-flex w-16 h-16 rounded-2xl bg-white/15 border border-white/30 items-center justify-center mb-6 backdrop-blur-sm">
+            <Award size={28} className="text-white" />
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-5 leading-tight">{t("about.authDistributor")}</h2>
+          <p className="text-white/85 text-base md:text-lg leading-relaxed">{t("about.authDesc")}</p>
         </div>
       </section>
 
-      {/* Brands Section — same as homepage */}
-      <section className="py-20 bg-background" aria-labelledby="brands-heading-about">
+      {/* Brands */}
+      <section className="py-20 md:py-28 bg-background" aria-labelledby="brands-heading-about">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-14">
-            <p className="text-accent font-semibold text-sm uppercase tracking-widest mb-3">{t("brands.ourPartners")}</p>
-            <h2 id="brands-heading-about" className="text-3xl md:text-4xl font-bold text-primary mb-4">{t("brands.title")}</h2>
-            <div className="w-16 h-1 bg-accent rounded-full mx-auto mb-4" />
-            <p className="text-muted-foreground max-w-xl mx-auto">{t("brands.desc")}</p>
+          <div className="text-center mb-14 max-w-2xl mx-auto">
+            <p className="eyebrow justify-center mb-4">{t("brands.ourPartners")}</p>
+            <h2 id="brands-heading-about" className="font-display text-3xl md:text-5xl font-bold text-foreground mb-5">
+              {t("brands.title")}
+            </h2>
+            <p className="text-muted-foreground text-base md:text-lg">{t("brands.desc")}</p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
             {brands.map((brand) => (
               <div
                 key={brand.name}
-                className="bg-card rounded-xl px-4 py-5 text-center card-shadow hover:elevated-shadow hover:-translate-y-0.5 transition-all duration-200 border border-border flex flex-col items-center justify-center gap-3 min-h-[110px]"
+                className="group bg-card rounded-2xl p-5 text-center soft-shadow hover:elevated-shadow hover:-translate-y-1 transition-all duration-300 border border-border flex flex-col items-center justify-center gap-3 min-h-[140px]"
               >
-                <div className="img-hover-zoom rounded">
+                <div className="img-hover-zoom rounded-lg flex-1 flex items-center justify-center w-full bg-white">
                   <img
                     src={brand.logo}
                     alt={`${brand.name} logo`}
-                    className="h-10 w-auto max-w-[100px] object-contain mix-blend-multiply"
+                    className="h-12 w-auto max-w-[110px] object-contain mix-blend-multiply"
                   />
                 </div>
-                <span className="text-sm font-semibold text-foreground leading-tight block">{brand.name}</span>
+                <span className="text-xs font-semibold text-foreground leading-tight block group-hover:text-primary transition-colors">
+                  {brand.name}
+                </span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact CTA */}
-      <section className="py-16 bg-muted border-t border-border" aria-label="Contact us">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold text-primary mb-6">{t("about.getInTouch")}</h2>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
-            <a href="tel:+966551040126" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium">
-              <Phone size={18} className="text-primary" /> +966 551 040 126
-            </a>
-            <a href="mailto:info@perfectmechanicalsystem.com" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium">
-              <Mail size={18} className="text-primary" /> info@perfectmechanicalsystem.com
-            </a>
-            <span className="flex items-center gap-2 text-foreground font-medium">
-              <MapPin size={18} className="text-primary" /> Al Malaz, Salah Ad Din Al Ayyubi Rd, Riyadh
-            </span>
+      {/* Get in touch */}
+      <section className="py-16 md:py-20 bg-muted border-t border-border" aria-label="Contact us">
+        <div className="container mx-auto px-4">
+          <div className="bg-card rounded-3xl p-8 md:p-12 elevated-shadow border border-border max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center">
+              <div>
+                <p className="eyebrow mb-3">{t("about.getInTouch")}</p>
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-5">{t("about.getInTouch")}</h2>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-x-8 gap-y-3 text-sm">
+                  <a href="tel:+966551040126" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium">
+                    <Phone size={16} className="text-primary" /> +966 551 040 126
+                  </a>
+                  <a href="mailto:info@perfectmechanicalsystem.com" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium">
+                    <Mail size={16} className="text-primary" /> info@perfectmechanicalsystem.com
+                  </a>
+                  <span className="flex items-center gap-2 text-foreground font-medium">
+                    <MapPin size={16} className="text-primary" /> Al Malaz, Riyadh
+                  </span>
+                </div>
+              </div>
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-7 py-3.5 rounded-xl hover:bg-primary-dark transition-colors whitespace-nowrap"
+              >
+                {t("nav.contact")}
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-lg hover:bg-primary-light transition-colors"
-          >
-            {t("nav.contact")} <ArrowRight size={16} />
-          </Link>
         </div>
       </section>
     </main>
