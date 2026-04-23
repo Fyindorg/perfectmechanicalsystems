@@ -1,6 +1,6 @@
-import { useMemo, useState, useDeferredValue } from "react";
+import { useMemo, useState, useDeferredValue, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Search, ShieldCheck } from "lucide-react";
+import { Search, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import productsData from "@/data/products.json";
 import productPlaceholder from "@/assets/products/product-placeholder.jpg";
 import { useLanguage } from "@/context/LanguageContext";
@@ -19,10 +19,13 @@ interface Product {
 
 const ALL_PRODUCTS = productsData as Product[];
 
+const PAGE_SIZE = 50;
+
 const ProductsPage = () => {
   const { t } = useLanguage();
   const [search, setSearch] = useState("");
   const [brand, setBrand] = useState<string>("ALL");
+  const [page, setPage] = useState(1);
   const deferredSearch = useDeferredValue(search);
 
   const brands = useMemo(() => {
@@ -41,6 +44,21 @@ const ProductsPage = () => {
       );
     });
   }, [deferredSearch, brand]);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [deferredSearch, brand]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = filtered.slice(pageStart, pageStart + PAGE_SIZE);
+
+  const goToPage = (p: number) => {
+    setPage(p);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-background">
