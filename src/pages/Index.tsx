@@ -19,7 +19,7 @@ import brandUnid from "@/assets/brand-unid.png";
 import brandNibco from "@/assets/brand-nibco.png";
 import brandJtpr from "@/assets/brand-jtpr.jpg";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, Phone, Mail, MapPin, ShieldCheck, Globe2, Wrench } from "lucide-react";
+import { ArrowRight, CheckCircle, Phone, Mail, MapPin, ShieldCheck, Globe2, Wrench, Award } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 const brands = [
