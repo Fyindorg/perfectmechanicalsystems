@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { ArrowLeft, Ruler, Layers, FileCheck2, Tag, Boxes } from "lucide-react";
+import { ArrowLeft, Ruler, Layers, FileCheck2, Tag, Boxes, ChevronRight } from "lucide-react";
 import productsData from "@/data/products.json";
 import productPlaceholder from "@/assets/products/product-placeholder.jpg";
 
@@ -27,11 +27,28 @@ const ProductDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 md:py-12">
+        {/* Breadcrumbs: Products > Product title */}
+        <nav aria-label="Breadcrumb" className="mb-5">
+          <ol className="flex items-center gap-1.5 text-sm text-muted-foreground flex-wrap">
+            <li>
+              <Link to="/products" className="font-medium text-primary hover:underline">
+                Products
+              </Link>
+            </li>
+            <li aria-hidden="true" className="flex items-center">
+              <ChevronRight size={14} />
+            </li>
+            <li className="text-foreground font-medium line-clamp-1" aria-current="page">
+              {product.title}
+            </li>
+          </ol>
+        </nav>
+
         <Link
           to="/products"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline mb-6"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-primary mb-6"
         >
-          <ArrowLeft size={16} /> Back to Products
+          <ArrowLeft size={14} /> Back to Products
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
@@ -58,21 +75,12 @@ const ProductDetail = () => {
               {product.title}
             </h1>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4">
               <SpecRow icon={<Tag size={16} />} label="Brand" value={product.brand} />
               <SpecRow icon={<Boxes size={16} />} label="Category" value={product.category} />
               <SpecRow icon={<Ruler size={16} />} label="Size Range" value={product.sizeRange} />
               <SpecRow icon={<Layers size={16} />} label="Material" value={product.materials} />
               <SpecRow icon={<FileCheck2 size={16} />} label="Standards / Specs" value={product.standards} />
-            </div>
-
-            <div className="bg-muted/50 border border-border rounded-xl p-5">
-              <h2 className="font-display font-bold text-foreground mb-3">
-                Product Information
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                {product.info}
-              </p>
             </div>
 
             <a
@@ -84,6 +92,16 @@ const ProductDetail = () => {
               Request a Quote
             </a>
           </div>
+        </div>
+
+        {/* Product Information — spans full grid width (from image edge to spec edge) */}
+        <div className="mt-10 bg-muted/50 border border-border rounded-xl p-6 md:p-8">
+          <h2 className="font-display font-bold text-xl text-foreground mb-3">
+            Product Information
+          </h2>
+          <p className="text-sm md:text-base text-muted-foreground leading-relaxed whitespace-pre-line">
+            {product.info}
+          </p>
         </div>
       </div>
     </div>
