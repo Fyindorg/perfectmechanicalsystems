@@ -7,6 +7,7 @@ import { LanguageProvider } from "./context/LanguageContext";
 import Index from "./pages/Index";
 import AboutPage from "./pages/About";
 import ProductsPage from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 import ContactPage from "./pages/Contact";
 import CatalogsPage from "./pages/Catalogs";
 import NotFound from "./pages/NotFound";
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/catalogs" element={<CatalogsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<NotFound />} />

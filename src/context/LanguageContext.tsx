@@ -45,7 +45,6 @@ const translations: Record<string, Record<Language, string>> = {
   "home.aboutP1": { en: "Perfect Mechanical System Est. is one of the leading traders of Mechanical and Electrical products in Saudi Arabia, headquartered in Riyadh. We are specialized in the field of Oil, Water, Gas, Steam, Fire Fighting, and many other sectors.", ar: "مؤسسة بيرفكت ميكانيكال سيستم هي واحدة من أبرز تجار المنتجات الميكانيكية والكهربائية في المملكة العربية السعودية، ومقرها الرياض. نحن متخصصون في مجالات النفط والمياه والغاز والبخار ومكافحة الحرائق والعديد من القطاعات الأخرى." },
   "home.aboutP2": { en: "Our mission is simple — to provide certified international brands at competitive prices, improving the Kingdom's infrastructure by supplying the market with prominent products along with their approved certifications.", ar: "مهمتنا بسيطة — تقديم علامات تجارية دولية معتمدة بأسعار تنافسية، وتحسين البنية التحتية للمملكة من خلال تزويد السوق بمنتجات بارزة مع شهاداتها المعتمدة." },
   "home.learnMore": { en: "Learn More About Us", ar: "اعرف المزيد عنا" },
-  "home.commercialReg": { en: "Commercial Registration", ar: "السجل التجاري" },
 
   // Sectors
   "sector.oilGas": { en: "Oil & Gas", ar: "النفط والغاز" },

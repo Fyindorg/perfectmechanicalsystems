@@ -76,7 +76,7 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/40">
           <span>© {new Date().getFullYear()} Perfect Mechanical System Est. {t("footer.rights")}</span>
-          <span>CR No: 7041863023 | VAT: 311125275500003</span>
+          
         </div>
       </div>
     </footer>
