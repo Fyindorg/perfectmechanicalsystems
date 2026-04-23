@@ -163,15 +163,6 @@ const Index = () => {
               <img src={aboutBg} alt="Mechanical pipe systems and industrial fittings" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/40 via-transparent to-transparent" />
             </div>
-            <div className="hidden md:block absolute -bottom-8 -left-8 bg-card rounded-2xl elevated-shadow p-5 max-w-[240px] border border-border">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-                  <Award size={18} className="text-white" />
-                </div>
-                <div className="font-display font-bold text-foreground">{t("home.commercialReg")}</div>
-              </div>
-              <div className="text-muted-foreground text-xs leading-relaxed">CR No: 7041863023<br />VAT: 311125275500003</div>
-            </div>
             <div className="hidden md:block absolute -top-6 -right-6 w-28 h-28 rounded-2xl bg-primary/10 -z-10" />
           </div>
         </div>
