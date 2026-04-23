@@ -149,7 +149,7 @@ const Index = () => {
               ))}
             </ul>
             <Link
-              to="/about"
+              to="/about-us"
               className="group inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-7 py-3.5 rounded-xl hover:bg-primary-dark transition-colors"
             >
               {t("home.learnMore")}

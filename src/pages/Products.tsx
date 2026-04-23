@@ -1,6 +1,6 @@
-import { useMemo, useState, useDeferredValue } from "react";
+import { useMemo, useState, useDeferredValue, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Search, ShieldCheck } from "lucide-react";
+import { Search, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import productsData from "@/data/products.json";
 import productPlaceholder from "@/assets/products/product-placeholder.jpg";
 import { useLanguage } from "@/context/LanguageContext";
@@ -19,10 +19,13 @@ interface Product {
 
 const ALL_PRODUCTS = productsData as Product[];
 
+const PAGE_SIZE = 50;
+
 const ProductsPage = () => {
   const { t } = useLanguage();
   const [search, setSearch] = useState("");
   const [brand, setBrand] = useState<string>("ALL");
+  const [page, setPage] = useState(1);
   const deferredSearch = useDeferredValue(search);
 
   const brands = useMemo(() => {
@@ -41,6 +44,21 @@ const ProductsPage = () => {
       );
     });
   }, [deferredSearch, brand]);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [deferredSearch, brand]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = filtered.slice(pageStart, pageStart + PAGE_SIZE);
+
+  const goToPage = (p: number) => {
+    setPage(p);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -63,8 +81,8 @@ const ProductsPage = () => {
         </div>
       </section>
 
-      {/* Sticky filter bar */}
-      <div className="sticky top-[64px] md:top-[88px] z-40 bg-white/95 backdrop-blur-md border-b border-border shadow-sm">
+      {/* Sticky filter bar — slightly different tone than the header */}
+      <div className="sticky top-[60px] md:top-[76px] z-40 bg-muted/80 backdrop-blur-md border-y border-border shadow-sm">
         <div className="container mx-auto px-4 py-3">
           <div className="flex flex-col sm:flex-row gap-2.5">
             <div className="relative flex-1">
@@ -87,15 +105,12 @@ const ProductsPage = () => {
               aria-label="Filter by brand"
               className="h-11 px-3 pr-8 rounded-lg border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary sm:min-w-[200px]"
             >
-              <option value="ALL">All Brands ({ALL_PRODUCTS.length})</option>
-              {brands.map((b) => {
-                const count = ALL_PRODUCTS.filter((p) => p.brand === b).length;
-                return (
-                  <option key={b} value={b}>
-                    {b} ({count})
-                  </option>
-                );
-              })}
+              <option value="ALL">All Brands</option>
+              {brands.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
             </select>
           </div>
           <p className="mt-2 text-xs text-muted-foreground">
@@ -111,14 +126,107 @@ const ProductsPage = () => {
             No products match your search.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {filtered.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {pageItems.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onChange={goToPage}
+                pageStart={pageStart}
+                pageEnd={pageStart + pageItems.length}
+                total={filtered.length}
+              />
+            )}
+          </>
         )}
       </section>
     </div>
+  );
+};
+
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onChange,
+  pageStart,
+  pageEnd,
+  total,
+}: {
+  currentPage: number;
+  totalPages: number;
+  onChange: (p: number) => void;
+  pageStart: number;
+  pageEnd: number;
+  total: number;
+}) => {
+  const pages: (number | "…")[] = [];
+  const window = 1;
+  for (let i = 1; i <= totalPages; i++) {
+    if (
+      i === 1 ||
+      i === totalPages ||
+      (i >= currentPage - window && i <= currentPage + window)
+    ) {
+      pages.push(i);
+    } else if (pages[pages.length - 1] !== "…") {
+      pages.push("…");
+    }
+  }
+
+  return (
+    <nav aria-label="Pagination" className="mt-10 flex flex-col items-center gap-3">
+      <p className="text-xs text-muted-foreground">
+        Showing <span className="font-semibold text-foreground">{pageStart + 1}</span>–
+        <span className="font-semibold text-foreground">{pageEnd}</span> of {total}
+      </p>
+      <ul className="flex items-center gap-1.5 flex-wrap justify-center">
+        <li>
+          <button
+            onClick={() => onChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="h-9 w-9 inline-flex items-center justify-center rounded-md border border-border bg-background text-foreground hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            aria-label="Previous page"
+          >
+            <ChevronLeft size={16} />
+          </button>
+        </li>
+        {pages.map((p, idx) =>
+          p === "…" ? (
+            <li key={`e-${idx}`} className="px-1.5 text-muted-foreground text-sm">…</li>
+          ) : (
+            <li key={p}>
+              <button
+                onClick={() => onChange(p)}
+                aria-current={p === currentPage ? "page" : undefined}
+                className={`h-9 min-w-9 px-3 inline-flex items-center justify-center rounded-md text-sm font-medium border transition-colors ${
+                  p === currentPage
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background text-foreground border-border hover:bg-muted"
+                }`}
+              >
+                {p}
+              </button>
+            </li>
+          )
+        )}
+        <li>
+          <button
+            onClick={() => onChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="h-9 w-9 inline-flex items-center justify-center rounded-md border border-border bg-background text-foreground hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            aria-label="Next page"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </li>
+      </ul>
+    </nav>
   );
 };
 
