@@ -72,7 +72,7 @@ const Index = () => {
         <div className="absolute inset-0 gradient-mesh" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/90 via-primary/70 to-primary-dark/90" />
 
-        <div className="relative container mx-auto px-4 pt-20 pb-32 md:pt-28 md:pb-40">
+        <div className="relative container mx-auto px-4 pt-20 pb-20 md:pt-28 md:pb-28">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/30 text-white text-xs font-semibold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full mb-7 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
@@ -103,32 +103,10 @@ const Index = () => {
             </div>
           </div>
         </div>
-
-        {/* Floating stats card */}
-        <div className="relative container mx-auto px-4 -mb-20 z-10">
-          <div className="glass border border-white/40 rounded-2xl elevated-shadow p-6 md:p-8 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {[
-              { num: "17+", label: t("hero.globalBrands"), Icon: Wrench },
-              { num: "80+", label: t("hero.countriesServed"), Icon: Globe2 },
-              { num: "30+", label: t("hero.yearsExperience"), Icon: Award },
-              { num: "100%", label: t("hero.certifiedProducts"), Icon: ShieldCheck },
-            ].map((s) => (
-              <div key={s.label} className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <s.Icon size={20} className="text-primary" />
-                </div>
-                <div>
-                  <div className="font-display text-2xl md:text-3xl font-bold text-primary leading-none">{s.num}</div>
-                  <div className="text-muted-foreground text-xs mt-1 leading-tight">{s.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* About snapshot */}
-      <section className="pt-36 pb-20 md:pt-44 md:pb-28 bg-background relative overflow-hidden" aria-labelledby="about-heading-home">
+      <section className="pt-20 pb-20 md:pt-24 md:pb-28 bg-background relative overflow-hidden" aria-labelledby="about-heading-home">
         <div className="absolute top-1/2 -right-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
         <div className="container mx-auto grid md:grid-cols-2 gap-14 items-center px-4 relative">
           <div className="order-2 md:order-1">
