@@ -51,15 +51,18 @@ const ProductDetail = () => {
           <ArrowLeft size={14} /> Back to Products
         </Link>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Image */}
-          <div className="relative">
-            <div className="aspect-square bg-white rounded-2xl overflow-hidden border border-border elevated-shadow">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-start">
+          {/* Image — fixed 500x500 */}
+          <div className="relative flex-shrink-0 mx-auto lg:mx-0">
+            <div
+              className="bg-white rounded-2xl overflow-hidden border border-border elevated-shadow"
+              style={{ width: 500, height: 500, maxWidth: "100%" }}
+            >
               <img
                 src={productPlaceholder}
                 alt={product.title}
-                width={1024}
-                height={1024}
+                width={500}
+                height={500}
                 className="w-full h-full object-contain p-8 transition-transform duration-[1000ms] ease-out hover:scale-110"
               />
             </div>
@@ -68,8 +71,8 @@ const ProductDetail = () => {
             </span>
           </div>
 
-          {/* Details */}
-          <div>
+          {/* Details — title, specs, then product info, then quote */}
+          <div className="flex-1 min-w-0">
             <p className="eyebrow mb-3">{product.category}</p>
             <h1 className="font-display text-2xl md:text-4xl font-bold text-foreground mb-5 leading-tight">
               {product.title}
@@ -83,6 +86,17 @@ const ProductDetail = () => {
               <SpecRow icon={<FileCheck2 size={16} />} label="Standards / Specs" value={product.standards} />
             </div>
 
+            {/* Product Information — beside image, under attributes */}
+            <div className="mt-6 bg-muted/50 border border-border rounded-xl p-5 md:p-6">
+              <h2 className="font-display font-bold text-lg text-foreground mb-2">
+                Product Information
+              </h2>
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed whitespace-pre-line">
+                {product.info}
+              </p>
+            </div>
+
+            {/* Request a Quote — after product info */}
             <a
               href="https://wa.me/966551040126"
               target="_blank"
@@ -92,16 +106,6 @@ const ProductDetail = () => {
               Request a Quote
             </a>
           </div>
-        </div>
-
-        {/* Product Information — spans full grid width (from image edge to spec edge) */}
-        <div className="mt-10 bg-muted/50 border border-border rounded-xl p-6 md:p-8">
-          <h2 className="font-display font-bold text-xl text-foreground mb-3">
-            Product Information
-          </h2>
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed whitespace-pre-line">
-            {product.info}
-          </p>
         </div>
       </div>
     </div>
