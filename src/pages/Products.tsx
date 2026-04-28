@@ -82,7 +82,7 @@ const ProductsPage = () => {
       </section>
 
       {/* Sticky filter bar — slightly different tone than the header */}
-      <div className="sticky top-[60px] md:top-[76px] z-40 bg-muted/80 backdrop-blur-md border-y border-border shadow-sm">
+      <div className="sticky top-[60px] lg:top-[72px] z-40 bg-muted/80 backdrop-blur-md border-y border-border shadow-sm">
         <div className="container mx-auto px-4 py-3">
           <div className="flex flex-col sm:flex-row gap-2.5">
             <div className="relative flex-1">
