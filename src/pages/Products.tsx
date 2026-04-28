@@ -1,5 +1,5 @@
 import { useMemo, useState, useDeferredValue, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Search, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import productsData from "@/data/products.json";
 import productPlaceholder from "@/assets/products/product-placeholder.jpg";
@@ -23,9 +23,11 @@ const PAGE_SIZE = 50;
 
 const ProductsPage = () => {
   const { t } = useLanguage();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [brand, setBrand] = useState<string>("ALL");
-  const [page, setPage] = useState(1);
+  const pageParam = parseInt(searchParams.get("page") || "1", 10);
+  const page = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
   const deferredSearch = useDeferredValue(search);
 
   const brands = useMemo(() => {
@@ -47,7 +49,12 @@ const ProductsPage = () => {
 
   // Reset to first page when filters change
   useEffect(() => {
-    setPage(1);
+    if (searchParams.get("page")) {
+      const next = new URLSearchParams(searchParams);
+      next.delete("page");
+      setSearchParams(next, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deferredSearch, brand]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -56,7 +63,13 @@ const ProductsPage = () => {
   const pageItems = filtered.slice(pageStart, pageStart + PAGE_SIZE);
 
   const goToPage = (p: number) => {
-    setPage(p);
+    const next = new URLSearchParams(searchParams);
+    if (p <= 1) {
+      next.delete("page");
+    } else {
+      next.set("page", String(p));
+    }
+    setSearchParams(next);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
