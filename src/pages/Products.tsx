@@ -63,21 +63,17 @@ const ProductsPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Banner */}
-      <section className="relative bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-14 md:py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-8 md:py-10 overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-20" />
         <div className="container mx-auto px-4 relative">
-          <p className="eyebrow text-white/80 mb-3">Our Catalog</p>
-          <h1 className="font-display text-3xl md:text-5xl font-bold mb-3">
+          <p className="eyebrow text-white/80 mb-2">Our Catalog</p>
+          <h1 className="font-display text-2xl md:text-4xl font-bold mb-2">
             {t("products.title") || "Products & Brands"}
           </h1>
-          <p className="text-white/85 max-w-2xl">
+          <p className="text-white/85 max-w-2xl text-sm md:text-base">
             Browse {ALL_PRODUCTS.length}+ certified industrial products from our
             partner brands. Search by category or product name.
           </p>
-          <div className="mt-5 inline-flex items-center gap-2 text-xs md:text-sm bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2">
-            <ShieldCheck size={16} />
-            All products supplied with manufacturer certifications.
-          </div>
         </div>
       </section>
 
