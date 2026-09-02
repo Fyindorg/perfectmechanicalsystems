@@ -1,0 +1,78 @@
+{
+  "heroImage": null,
+  "aboutImage": null,
+  "brands": [
+    {
+      "name": "CRANE",
+      "logo": "src/assets/brand-crane.jpg"
+    },
+    {
+      "name": "WIKA",
+      "logo": "src/assets/brand-wika.png"
+    },
+    {
+      "name": "WATTS",
+      "logo": "src/assets/brand-watts.jpg"
+    },
+    {
+      "name": "Mueller Co.",
+      "logo": "src/assets/brand-mueller.png"
+    },
+    {
+      "name": "PEGLER",
+      "logo": "src/assets/brand-pegler.jpg"
+    },
+    {
+      "name": "BENKAN",
+      "logo": "src/assets/brand-benkan.png"
+    },
+    {
+      "name": "POTTER",
+      "logo": "src/assets/brand-potter.png"
+    },
+    {
+      "name": "INTERPIPE",
+      "logo": "src/assets/brand-interpipe.png"
+    },
+    {
+      "name": "SHURJOINT",
+      "logo": "src/assets/brand-shurjoint.png"
+    },
+    {
+      "name": "HITACHI METALS, LTD",
+      "logo": "src/assets/brand-hitachi.jpg"
+    },
+    {
+      "name": "EUROPEAN CASTING INDUSTRY",
+      "logo": "src/assets/brand-eci.png"
+    },
+    {
+      "name": "NEUMIRA",
+      "logo": "src/assets/brand-neumira.jpg"
+    },
+    {
+      "name": "MR-FLEX",
+      "logo": "src/assets/brand-mrflex.jpg"
+    },
+    {
+      "name": "NATIONAL",
+      "logo": "src/assets/brand-national.jpg"
+    },
+    {
+      "name": "BOTH-WELL",
+      "logo": "src/assets/brand-bothwell.png"
+    },
+    {
+      "name": "UNID",
+      "logo": "src/assets/brand-unid.png"
+    },
+    {
+      "name": "NIBCO",
+      "logo": "src/assets/brand-nibco.png"
+    },
+    {
+      "name": "SHANDONG JINTONG PIPELINE CO.,LTD",
+      "logo": "src/assets/brand-jtpr.jpg"
+    }
+  ]
+}

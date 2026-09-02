@@ -1,0 +1,44 @@
+DirectoryIndex index.php
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Block direct access to the JSON "database" and shared PHP includes, even though they are real files/dirs.
+  RewriteRule ^data/ - [F,L]
+  RewriteRule ^includes/ - [F,L]
+  RewriteRule ^admin/includes/ - [F,L]
+
+  # Catalogs listing (exact match only) must be handled BEFORE the "let real dirs pass through" rule below,
+  # otherwise the real catalogs/ directory on disk shadows this route and Apache serves its (listing-disabled) index -> 403.
+  RewriteRule ^catalogs/?$ catalogs.php [L]
+
+  # Let all other real files and directories (images, PDFs, css/js, catalogs/<file>.pdf, src/assets/, admin/*.php) pass through untouched.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Home
+  RewriteRule ^$ index.php [L]
+
+  # Static-ish top-level pages
+  RewriteRule ^about-us/?$ about-us.php [L]
+  RewriteRule ^contact/?$ contact.php [L]
+  RewriteRule ^contact-submit/?$ contact-submit.php [L]
+
+  # Products pagination: /products-page-2, /products-page-3, ...
+  RewriteRule ^products-page-([0-9]+)/?$ products.php?page=$1 [QSA,L]
+
+  # Product detail by slug
+  RewriteRule ^products/([^/]+)/?$ product.php?slug=$1 [QSA,L]
+
+  # Products listing
+  RewriteRule ^products/?$ products.php [QSA,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|css|js)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+</IfModule>
